@@ -2,9 +2,9 @@
 
 namespace RedberryProducts\LaravelVersion;
 
+use RedberryProducts\LaravelVersion\Commands\LaravelVersionCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use RedberryProducts\LaravelVersion\Commands\LaravelVersionCommand;
 
 class LaravelVersionServiceProvider extends PackageServiceProvider
 {

@@ -2,8 +2,8 @@
 
 namespace RedberryProducts\LaravelVersion\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use RedberryProducts\LaravelVersion\Facades\LaravelVersion;
 
 class VersionBadgeController extends Controller

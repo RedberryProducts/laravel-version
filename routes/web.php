@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use RedberryProducts\LaravelVersion\Http\Controllers\VersionBadgeController;
 use RedberryProducts\LaravelVersion\Http\Controllers\VersionController;

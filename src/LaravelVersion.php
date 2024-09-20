@@ -4,8 +4,8 @@ namespace RedberryProducts\LaravelVersion;
 
 class LaravelVersion
 {
-
     protected string $composerVersion;
+
     protected string $envVersion;
 
     public function __construct()
@@ -13,7 +13,6 @@ class LaravelVersion
         $this->composerVersion = json_decode(file_get_contents(base_path('composer.json')))->version ?? 'N/A';
         $this->envVersion = config('version.app_version');
     }
-
 
     public function getComposerVersion()
     {

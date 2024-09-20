@@ -1,84 +1,105 @@
-# This is my package laravel-version
+# Laravel Version Badge Package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/redberryproducts/laravel-version.svg?style=flat-square)](https://packagist.org/packages/redberryproducts/laravel-version)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/redberryproducts/laravel-version/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/redberryproducts/laravel-version/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/redberryproducts/laravel-version/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/redberryproducts/laravel-version/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/redberryproducts/laravel-version.svg?style=flat-square)](https://packagist.org/packages/redberryproducts/laravel-version)
+[![Latest Stable Version](https://poser.pugx.org/redberryproducts/laravel-version/v/stable)](https://packagist.org/packages/redberryproducts/laravel-version)
+[![Total Downloads](https://poser.pugx.org/redberryproducts/laravel-version/downloads)](https://packagist.org/packages/redberryproducts/laravel-version)
+[![License](https://poser.pugx.org/redberryproducts/laravel-version/license)](https://packagist.org/packages/redberryproducts/laravel-version)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This Laravel package generates dynamic version badges that reflect the current application version or Composer version
+based on various conditions. The badges can be easily displayed in your application and updated automatically based on
+your environment.
 
-## Support us
+## Features
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-version.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-version)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+- Display the application version from the `.env` file.
+- Display the Composer version from `composer.json`.
+- Generate dynamic SVG badges to show the versions.
+- Customizable routes for accessing version and badge data.
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer:
 
 ```bash
 composer require redberryproducts/laravel-version
 ```
 
-You can publish and run the migrations with:
+## Publish Configuration
+
+After installation, publish the configuration file:
 
 ```bash
-php artisan vendor:publish --tag="laravel-version-migrations"
-php artisan migrate
+php artisan vendor:publish --tag=laravel-version-config
 ```
 
-You can publish the config file with:
+This will create a config/version.php file where you can set your application version:This will create a
+config/version.php file where you can set your application version:
 
-```bash
-php artisan vendor:publish --tag="laravel-version-config"
-```
-
-This is the contents of the published config file:
-
-```php
+```php 
 return [
+    'app_version' => env('APP_VERSION', 'N/A'),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-version-views"
 ```
 
 ## Usage
 
-```php
-$laravelVersion = new RedberryProducts\LaravelVersion();
-echo $laravelVersion->echoPhrase('Hello, RedberryProducts!');
+### Routes
+
+This package provides two routes for fetching version information and generating badges.
+
+1. Application Version: Retrieves the current version of your application.
+    - URL: `/application/version`
+    - Controller: `VersionController@index`
+    - Returns both the environment version (from .env) and the composer version (from composer.json).
+2. Version Badge: Generates an SVG badge with dynamic content based on the requested provider (either composer or env).
+    - URL: `/application/version/badge?provider={composer|env}&environment={optional}`
+    - Controller: `VersionBadgeController`
+
+### Example Badge
+
+You can include the badge in your application as an SVG by embedding the URL in your frontend or views:
+
+```html
+<img src="{{ route('application.version.badge', ['provider' => 'composer']) }}" alt="Composer Version Badge">
+<img src="{{ route('application.version.badge', ['provider' => 'env']) }}" alt="Environment Version Badge">
 ```
 
-## Testing
+## Blade Views
 
-```bash
-composer test
+The package also comes with two Blade files for rendering the version and badges.
+
+1. `app.blade.php`: Displays both the environment and composer versions using the badge component.
+    ```php
+    @include('version::badge', ['label' => 'Environment Version', 'version' => $envVersion])
+    @include('version::badge', ['label' => 'Composer Version', 'version' => $composerVersion])
+    ```
+2. `badge.blade.php`: Generates the SVG for the badge based on the label and version provided.
+
+## Configuration
+
+The package uses the following environment variable in your `.env` file:
+
+```dotenv
+APP_VERSION=1.0.0
 ```
 
-## Changelog
+By default, if `APP_VERSION` is not set, it will display N/A.
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+## Customization
+
+To customize the badge, you can replace `'badge_blade' => 'version::badge',` in the `config/version.php` file with your
+custom blade file.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Contributions are welcome! Please feel free to submit a Pull Request or open an issue.
 
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature-branch`.
+3. Commit your changes: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature-branch`.
+5. Open a pull request.
 
 ## Credits
 
 - [Nika Jorjoliani](https://github.com/RedberryProducts)
 - [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

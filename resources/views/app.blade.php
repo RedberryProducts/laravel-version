@@ -10,11 +10,11 @@
 
 <div>
     {{-- Retrieve version from .env file --}}
-    @include('version::badge', ['label' => 'Environment Version', 'version' => $envVersion])
+    @include(config('version.badge_blade'), ['label' => 'Environment Version', 'version' => $envVersion])
 </div>
 <div>
     {{-- Retrieve version from composer.json --}}
-    @include('version::badge', ['label' => 'Composer Version', 'version' => $composerVersion])
+    @include(config('version.badge_blade'), ['label' => 'Composer Version', 'version' => $composerVersion])
 </div>
 </body>
 </html>

@@ -15,6 +15,7 @@ class VersionBadgeController extends Controller
             'env' => LaravelVersion::getEnvVersion(),
             default => LaravelVersion::getComposerVersion(),
         };
+
         return response()->view(config('version.badge_blade'), compact('label', 'version'))->header('Content-Type', 'image/svg+xml');
     }
 }

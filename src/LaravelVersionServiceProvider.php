@@ -17,7 +17,7 @@ class LaravelVersionServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-version')
-            ->hasConfigFile()
+            ->hasConfigFile('version')
             ->hasViews()
             ->hasRoute('web')
             ->hasMigration('create_laravel_version_table')
